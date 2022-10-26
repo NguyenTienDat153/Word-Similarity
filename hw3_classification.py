@@ -3,6 +3,7 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import accuracy_score
+from sklearn.neural_network import MLPClassifier
 import numpy as np
 from tqdm import tqdm
 
@@ -93,19 +94,32 @@ def read_embedding(path):
 def main():
     # load embeddings, trainset, testset
     embeddings = read_embedding("word2vec/W2V_150.txt")
-    x_train, y_train = load_trainset(embeddings)
-    x_test, y_test = load_testset(embeddings)
+    X_train, y_train = load_trainset(embeddings)
+    X_test, y_test = load_testset(embeddings)
 
+    # print(f"shape train dataset: {len(X_train)}")
+    # print(f"shape train dataset: {len(X_test)}")
     # logistic regression train
+    print("Train with logistic regression ")
     model = LogisticRegression()
-    model.fit(x_train, y_train)
+    model.fit(X_train, y_train)
 
     # test
-    pred = model.predict(x_test)
+    pred = model.predict(X_test)
     print("Precision score:", precision_score(y_test, pred))
     print("Recall score:", recall_score(y_test, pred))
     print("F1 score:", f1_score(y_test, pred))
     print("Accuracy:", accuracy_score(y_test, pred))
+
+    print()
+    print("Train with MLP")
+    clf = MLPClassifier(hidden_layer_sizes=(500)).fit(X_train, y_train)
+    pred = clf.predict(X_test)
+    print("Precision score:", precision_score(y_test, pred))
+    print("Recall score:", recall_score(y_test, pred))
+    print("F1 score:", f1_score(y_test, pred))
+    print("Accuracy:", accuracy_score(y_test, pred))
+
     return
 
 
