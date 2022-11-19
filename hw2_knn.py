@@ -33,11 +33,13 @@ def calculate_cos_sim(w1, w2):
     return cosine_similarity([embed1], [embed2])[0][0]
 
 
-def KNN(w1, k):
+def KNN(w1, k=10):
     assert w1 in list(words.keys())
     KNN = sorted(
         list(words.keys()), key=lambda w2: calculate_cos_sim(w1, w2), reverse=True
     )
+    for w2 in KNN[:k]:
+        print(w2,f"{calculate_cos_sim(w1,w2):.04f}")
     return KNN[:k]
 
 
@@ -45,5 +47,7 @@ words = read_embedding("word2vec/W2V_150.txt")
 datasets = read_viSim400("datasets/ViSim-400/Visim-400.txt")
 
 # home work 2
-print(KNN("thú_vị", k=10))
+# print(KNN("thú_vị"))
 # return ['thú_vị', 'lý_thú', 'mới_mẻ', 'hữu_ích', 'điều_thú_vị', 'tuyệt_vời', 'kỳ_lạ', 'hữu_dụng', 'đáng_nhớ', 'lạ_mắt']
+
+print(KNN("nguyên_nhân"))

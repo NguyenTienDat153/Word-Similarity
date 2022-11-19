@@ -1,8 +1,5 @@
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import f1_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score, recall_score, precision_score, accuracy_score, classification_report
 from sklearn.neural_network import MLPClassifier
 import numpy as np
 from tqdm import tqdm
@@ -120,7 +117,25 @@ def main():
     print("F1 score:", f1_score(y_test, pred))
     print("Accuracy:", accuracy_score(y_test, pred))
 
-    return
+
+    Y_hat = clf.predict(X_test)
+
+    # print(clf.score(X_test, y_test))
+    print(classification_report(y_test, Y_hat, target_names=['synonym','antonym'], digits=4))
+
+    # Y_score = clf.predict_proba(X_test)
+
+    # print(np.where(y_test!=Y_hat))
+    # y_test = np.array(y_test)
+    # print(y_test[np.where(y_test!=Y_hat)[0]])
+    # print(Y_hat[np.where(y_test!=Y_hat)[0]])
+    # print(Y_score[np.where(y_test!=Y_hat)[0]])
+    # for wword in X_test[np.where(y_test!=Y_hat)[0]]:
+    #     wlen = wword.shape[0]//2
+    #     embed_w1, embed_w2 = wword[:wlen],wword[wlen:]
+    #     for key,value in embeddings.items():
+    #         if np.all(value==embed_w1): print(key)
+    #         if np.all(value==embed_w2): print(key)
 
 
 if __name__ == "__main__":

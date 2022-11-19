@@ -45,11 +45,16 @@ def cos_sim():
             list_word2.append(word2)
 
             cos_sim = calculate_cos_sim(word1, word2)
-
+            if cos_sim > 0.8:
+                print(f"Hight cos sim: {word1} {word2} {cos_sim}")
+            elif cos_sim >= 0.5 and cos_sim <=0.6:
+                print(f"Median cos sim: {word1} {word2} {cos_sim}")
+            elif cos_sim <= 0.1:
+                print(f"Low cos sim: {word1} {word2} {cos_sim}")
             # cover [-1, 1] to [0,4]
             cos_sims.append((cos_sim + 1) * 2)
 
-            print(word1, word2, sim1, (cos_sim + 1) * 2)
+            # print(word1, word2, sim1, (cos_sim + 1) * 2)
     # export ra file txt
     with open("cosine_similarity_ViSim-400.txt", "w", encoding="utf8") as f:
         for i in range(len(list_word1)):
